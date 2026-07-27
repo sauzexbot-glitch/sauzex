@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chatbots con IA para tu negocio</title>
+<meta name="description" content="Chatbots con IA que reservan citas y responden a tus clientes 24/7, conectados a WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #14201B;
+    --surface: #1C2A23;
+    --surface-2: #223027;
+    --ink: #F2EDE1;
+    --ink-dim: #B9C2B9;
+    --gold: #C98A3E;
+    --gold-soft: #E0AC6B;
+    --sage: #6E8F7B;
+    --line: rgba(242,237,225,0.12);
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before{
+    content:"";
+    position: fixed;
+    inset:0;
+    background:
+      radial-gradient(ellipse 800px 500px at 85% -10%, rgba(201,138,62,0.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 5% 110%, rgba(110,143,123,0.12), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  a{ color: inherit; }
+
+  .wrap{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position:relative;
+    z-index:1;
+  }
+
+  h1,h2,h3{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px; height:7px;
+    border-radius:50%;
+    background: var(--gold-soft);
+    box-shadow: 0 0 0 3px rgba(201,138,62,0.2);
+  }
+
+  /* NAV */
+  nav{
+    position: sticky;
+    top:0;
+    z-index: 50;
+    backdrop-filter: blur(10px);
+    background: rgba(20,32,27,0.75);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+  .brand{
+    font-family:'Fraunces', serif;
+    font-size: 19px;
+    font-weight:600;
+  }
+  .brand span{ color: var(--gold-soft); }
+  .nav-cta{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 13px;
+    padding: 9px 18px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    text-decoration:none;
+    transition: border-color .2s, background .2s;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{ border-color: var(--gold-soft); background: rgba(201,138,62,0.08); }
+
+  /* HERO */
+  .hero{
+    padding: 88px 0 100px;
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size: clamp(34px, 4.6vw, 54px);
+    line-height: 1.08;
+    margin: 20px 0 22px;
+  }
+  .hero h1 em{
+    font-style: normal;
+    color: var(--gold-soft);
+  }
+  .hero p.lead{
+    font-size: 17.5px;
+    color: var(--ink-dim);
+    max-width: 46ch;
+    margin-bottom: 34px;
+  }
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-primary{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background: var(--gold);
+    color: #16211B;
+    font-weight:600;
+    padding: 14px 24px;
+    border-radius: 10px;
+    text-decoration:none;
+    font-size:15.5px;
+    transition: transform .15s, background .2s;
+  }
+  .btn-primary:hover{ background: var(--gold-soft); transform: translateY(-1px); }
+  .btn-secondary{
+    display:inline-flex;
+    align-items:center;
+    padding: 14px 22px;
+    border-radius: 10px;
+    text-decoration:none;
+    font-size:15.5px;
+    color: var(--ink-dim);
+    border:1px solid var(--line);
+    transition: border-color .2s, color .2s;
+  }
+  .btn-secondary:hover{ border-color: var(--sage); color: var(--ink); }
+
+  /* PHONE MOCKUP */
+  .phone-stage{ display:flex; justify-content:center; }
+  .phone{
+    width: 300px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 34px;
+    padding: 10px;
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.6);
+  }
+  .phone-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding: 12px 12px 14px;
+  }
+  .phone-avatar{
+    width:34px; height:34px;
+    border-radius:50%;
+    background: linear-gradient(140deg, var(--gold-soft), var(--sage));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:600; font-size:14px; color:#16211B;
+  }
+  .phone-head .name{ font-size:14px; font-weight:600; }
+  .phone-head .status{ font-size:11.5px; color: var(--sage); font-family:'IBM Plex Mono',monospace; }
+  .phone-body{
+    background: #0F1813;
+    border-radius: 22px;
+    padding: 16px 12px;
+    min-height: 340px;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    justify-content:flex-end;
+  }
+  .bubble{
+    max-width: 82%;
+    padding: 9px 13px;
+    border-radius: 14px;
+    font-size: 13.5px;
+    line-height:1.4;
+    opacity:0;
+    transform: translateY(6px);
+    animation: rise .45s ease forwards;
+  }
+  .bubble.in{
+    align-self:flex-start;
+    background: var(--surface-2);
+    border-bottom-left-radius: 4px;
+    color: var(--ink);
+  }
+  .bubble.out{
+    align-self:flex-end;
+    background: var(--gold);
+    color: #16211B;
+    border-bottom-right-radius: 4px;
+    font-weight:500;
+  }
+  .bubble.check::after{ content:" ✓✓"; font-size:11px; opacity:0.65; }
+  @keyframes rise{ to{ opacity:1; transform:none; } }
+  .typing{
+    align-self:flex-start;
+    display:flex;
+    gap:4px;
+    padding: 10px 13px;
+    background: var(--surface-2);
+    border-radius: 14px;
+    border-bottom-left-radius:4px;
+    opacity:0;
+    animation: rise .4s ease forwards;
+  }
+  .typing span{
+    width:5px; height:5px; border-radius:50%;
+    background: var(--ink-dim);
+    animation: bounce 1.1s infinite ease-in-out;
+  }
+  .typing span:nth-child(2){ animation-delay:.15s; }
+  .typing span:nth-child(3){ animation-delay:.3s; }
+  @keyframes bounce{ 0%,60%,100%{ transform: translateY(0); opacity:.4 } 30%{ transform: translateY(-3px); opacity:1 } }
+
+  /* SECTION SHARED */
+  section{ padding: 78px 0; border-top: 1px solid var(--line); }
+  .section-head{ max-width: 620px; margin-bottom: 46px; }
+  .section-head h2{ font-size: clamp(26px, 3vw, 34px); margin-top:14px; }
+  .section-head p{ color: var(--ink-dim); margin-top: 12px; font-size:15.5px; }
+
+  /* SERVICES GRID */
+  .grid-4{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow:hidden;
+  }
+  .card{
+    background: var(--surface);
+    padding: 28px 26px;
+  }
+  .card .mark{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color: var(--gold-soft);
+    margin-bottom:14px;
+    display:block;
+  }
+  .card h3{ font-size: 18px; margin-bottom: 8px; font-weight:600; }
+  .card p{ color: var(--ink-dim); font-size: 14.5px; }
+
+  /* PROCESS */
+  .steps{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 28px;
+    counter-reset: step;
+  }
+  .step{ position:relative; padding-top: 8px; }
+  .step .num{
+    font-family:'Fraunces',serif;
+    font-size: 40px;
+    color: var(--gold-soft);
+    opacity:0.55;
+    display:block;
+    margin-bottom: 10px;
+  }
+  .step h3{ font-size:17px; margin-bottom:8px; font-weight:600; }
+  .step p{ color: var(--ink-dim); font-size:14.5px; }
+
+  /* CASE */
+  .case{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    background: var(--surface);
+    border:1px solid var(--line);
+    border-radius: 18px;
+    padding: 40px;
+    align-items:center;
+  }
+  .case .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color: var(--sage);
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .case h3{ font-size: 24px; margin: 12px 0 12px; }
+  .case p{ color: var(--ink-dim); font-size:15px; margin-bottom: 18px; }
+  .case-stats{ display:flex; gap:28px; }
+  .case-stats div b{ font-family:'Fraunces',serif; font-size:26px; display:block; color: var(--gold-soft); }
+  .case-stats div span{ font-size:12.5px; color: var(--ink-dim); }
+  .quote{
+    font-family:'Fraunces',serif;
+    font-size: 20px;
+    line-height:1.5;
+    color: var(--ink);
+  }
+  .quote::before{ content:"“"; color: var(--gold-soft); }
+  .quote::after{ content:"”"; color: var(--gold-soft); }
+
+  /* FOOTER CTA */
+  .cta-final{
+    text-align:center;
+    padding: 90px 0 100px;
+  }
+  .cta-final h2{ font-size: clamp(28px,4vw,42px); margin-bottom:16px; }
+  .cta-final p{ color: var(--ink-dim); margin-bottom: 30px; }
+
+  footer{
+    border-top: 1px solid var(--line);
+    padding: 26px 0;
+    font-size: 13px;
+    color: var(--ink-dim);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  @media (max-width: 860px){
+    .hero{ grid-template-columns: 1fr; padding-top: 52px; }
+    .phone-stage{ order:-1; }
+    .grid-4{ grid-template-columns: 1fr; }
+    .steps{ grid-template-columns: 1fr; }
+    .case{ grid-template-columns: 1fr; padding: 28px; }
+    .wrap{ padding: 0 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .bubble, .typing{ animation: none !important; opacity:1 !important; transform:none !important; }
+  }
+
+  :focus-visible{ outline: 2px solid var(--gold-soft); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">chatbot<span>.ia</span></div>
+    <a class="nav-cta" href="https://wa.me/34600000000?text=Hola%2C%20quiero%20un%20chatbot%20para%20mi%20negocio" target="_blank" rel="noopener">Escríbeme por WhatsApp →</a>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div>
+    <span class="eyebrow">Chatbots con IA para negocios locales</span>
+    <h1>Que tu negocio<br>responda solo, <em>incluso<br>cuando duermes.</em></h1>
+    <p class="lead">Diseño e implanto chatbots con IA que atienden a tus clientes por WhatsApp, responden dudas y reservan citas directamente en tu calendario. Sin turnos extra, sin llamadas perdidas.</p>
+    <div class="cta-row">
+      <a class="btn-primary" href="https://wa.me/34600000000?text=Hola%2C%20quiero%20un%20chatbot%20para%20mi%20negocio" target="_blank" rel="noopener">Hablar por WhatsApp</a>
+      <a class="btn-secondary" href="#como-funciona">Ver cómo funciona</a>
+    </div>
+  </div>
+
+  <div class="phone-stage">
+    <div class="phone">
+      <div class="phone-head">
+        <div class="phone-avatar">M</div>
+        <div>
+          <div class="name">MARTO'S BARBER</div>
+          <div class="status">en línea</div>
+        </div>
+      </div>
+      <div class="phone-body" id="chat"></div>
+    </div>
+  </div>
+</header>
+
+<section id="servicios">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Qué hace el bot</span>
+      <h2>Un chatbot que conoce tu negocio de verdad</h2>
+      <p>No es un contestador con respuestas genéricas. Se configura con tus horarios, tus servicios y tu forma de hablar.</p>
+    </div>
+    <div class="grid-4">
+      <div class="card">
+        <span class="mark">24/7</span>
+        <h3>Responde a cualquier hora</h3>
+        <p>Atiende preguntas y reservas aunque tu negocio esté cerrado.</p>
+      </div>
+      <div class="card">
+        <span class="mark">Agenda</span>
+        <h3>Reserva citas solo</h3>
+        <p>Consulta tu calendario y bloquea el hueco sin que tengas que tocar nada.</p>
+      </div>
+      <div class="card">
+        <span class="mark">A medida</span>
+        <h3>Habla como tu negocio</h3>
+        <p>Se entrena con tus servicios, precios y tono, no con plantillas genéricas.</p>
+      </div>
+      <div class="card">
+        <span class="mark">WhatsApp</span>
+        <h3>Donde ya están tus clientes</h3>
+        <p>Funciona en WhatsApp, y también puede conectarse a Instagram o tu web.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Proceso</span>
+      <h2>De la idea al bot funcionando</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="num">01</span>
+        <h3>Me cuentas tu negocio</h3>
+        <p>Servicios, horarios y cómo quieres que se traten tus clientes.</p>
+      </div>
+      <div class="step">
+        <span class="num">02</span>
+        <h3>Configuro el bot</h3>
+        <p>Lo conecto a tu calendario y lo entreno con la información real de tu negocio.</p>
+      </div>
+      <div class="step">
+        <span class="num">03</span>
+        <h3>Lo conectamos y arranca</h3>
+        <p>Se activa en tu WhatsApp y empieza a responder desde el primer día.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="caso">
+  <div class="wrap">
+    <div class="case">
+      <div>
+        <span class="tag">Caso real</span>
+        <h3>MARTO'S BARBER</h3>
+        <p class="quote">Antes contestaba yo entre corte y corte. Ahora el bot gestiona las citas y yo solo miro la agenda.</p>
+      </div>
+      <div>
+        <div class="case-stats">
+          <div><b>24/7</b><span>disponibilidad</span></div>
+          <div><b>0</b><span>llamadas perdidas</span></div>
+          <div><b>1</b><span>agenda siempre al día</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="wrap">
+    <h2>¿Hablamos de tu negocio?</h2>
+    <p>Cuéntame qué necesitas y te digo cómo montarlo.</p>
+    <a class="btn-primary" href="https://wa.me/34600000000?text=Hola%2C%20quiero%20un%20chatbot%20para%20mi%20negocio" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>chatbot.ia — Asturias</span>
+  <span>Chatbots con IA para negocios locales</span>
+</footer>
+
+<script>
+  const chat = document.getElementById('chat');
+  const script = [
+    { side:'in',  text:'Hola, quiero reservar corte para el sábado' },
+    { typing:true },
+    { side:'out', text:'¡Claro! Tengo hueco a las 11:00 o a las 17:30, ¿cuál prefieres?' },
+    { side:'in',  text:'17:30 mejor' },
+    { typing:true },
+    { side:'out', text:'Reservado. Te espero el sábado a las 17:30 en MARTO\'S BARBER', check:true }
+  ];
+
+  let delay = 500;
+  script.forEach((msg) => {
+    if(msg.typing){
+      setTimeout(() => {
+        const t = document.createElement('div');
+        t.className = 'typing';
+        t.innerHTML = '<span></span><span></span><span></span>';
+        chat.appendChild(t);
+        setTimeout(() => t.remove(), 1000);
+      }, delay);
+      delay += 1150;
+    } else {
+      setTimeout(() => {
+        const b = document.createElement('div');
+        b.className = 'bubble ' + msg.side + (msg.check ? ' check' : '');
+        b.textContent = msg.text;
+        chat.appendChild(b);
+        chat.scrollTop = chat.scrollHeight;
+      }, delay);
+      delay += 550;
+    }
+  });
+</script>
+
+</body>
+</html>
