@@ -3,26 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chatbots con IA para tu negocio</title>
-<meta name="description" content="Chatbots con IA que reservan citas y responden a tus clientes 24/7, conectados a WhatsApp.">
+<title>sauzex.ia — Asistentes con IA para tu negocio</title>
+<meta name="description" content="Asistentes de IA que responden, reservan citas y atienden a tus clientes 24/7, conectados a WhatsApp y llamadas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #14201B;
-    --surface: #1C2A23;
-    --surface-2: #223027;
-    --ink: #F2EDE1;
-    --ink-dim: #B9C2B9;
-    --gold: #C98A3E;
-    --gold-soft: #E0AC6B;
-    --sage: #6E8F7B;
-    --line: rgba(242,237,225,0.12);
+    --bg: #0A0E1A;
+    --surface: #121A2C;
+    --surface-2: #1A2438;
+    --ink: #F1F3F8;
+    --ink-dim: #9BA3B8;
+    --primary: #5B6EF5;
+    --primary-soft: #8B98FA;
+    --on-primary: #FFFFFF;
+    --accent: #22D9C7;
+    --line: rgba(241,243,248,0.10);
+    --bad: #E0654A;
   }
 
   *{ box-sizing: border-box; margin:0; padding:0; }
-
   html{ scroll-behavior: smooth; }
 
   body{
@@ -38,8 +39,8 @@
     position: fixed;
     inset:0;
     background:
-      radial-gradient(ellipse 800px 500px at 85% -10%, rgba(201,138,62,0.14), transparent 60%),
-      radial-gradient(ellipse 700px 500px at 5% 110%, rgba(110,143,123,0.12), transparent 60%);
+      radial-gradient(ellipse 800px 500px at 85% -10%, rgba(91,110,245,0.16), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 5% 110%, rgba(34,217,199,0.10), transparent 60%);
     pointer-events:none;
     z-index:0;
   }
@@ -65,7 +66,7 @@
     font-size: 12.5px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--gold-soft);
+    color: var(--accent);
     display:flex;
     align-items:center;
     gap:10px;
@@ -74,8 +75,8 @@
     content:"";
     width:7px; height:7px;
     border-radius:50%;
-    background: var(--gold-soft);
-    box-shadow: 0 0 0 3px rgba(201,138,62,0.2);
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(34,217,199,0.2);
   }
 
   /* NAV */
@@ -84,7 +85,7 @@
     top:0;
     z-index: 50;
     backdrop-filter: blur(10px);
-    background: rgba(20,32,27,0.75);
+    background: rgba(10,14,26,0.75);
     border-bottom: 1px solid var(--line);
   }
   nav .wrap{
@@ -93,13 +94,23 @@
     justify-content:space-between;
     padding-top: 18px;
     padding-bottom: 18px;
+    gap: 18px;
   }
   .brand{
     font-family:'Fraunces', serif;
     font-size: 19px;
     font-weight:600;
   }
-  .brand span{ color: var(--gold-soft); }
+  .brand span{ color: var(--accent); }
+  .nav-right{ display:flex; align-items:center; gap: 18px; }
+  .nav-link{
+    font-size: 14px;
+    color: var(--ink-dim);
+    text-decoration:none;
+    transition: color .2s;
+    white-space:nowrap;
+  }
+  .nav-link:hover{ color: var(--ink); }
   .nav-cta{
     font-family:'IBM Plex Mono', monospace;
     font-size: 13px;
@@ -110,11 +121,11 @@
     transition: border-color .2s, background .2s;
     white-space:nowrap;
   }
-  .nav-cta:hover{ border-color: var(--gold-soft); background: rgba(201,138,62,0.08); }
+  .nav-cta:hover{ border-color: var(--primary-soft); background: rgba(91,110,245,0.08); }
 
   /* HERO */
   .hero{
-    padding: 88px 0 100px;
+    padding: 88px 0 80px;
     display:grid;
     grid-template-columns: 1.05fr 0.95fr;
     gap: 56px;
@@ -127,21 +138,21 @@
   }
   .hero h1 em{
     font-style: normal;
-    color: var(--gold-soft);
+    color: var(--primary-soft);
   }
   .hero p.lead{
     font-size: 17.5px;
     color: var(--ink-dim);
     max-width: 46ch;
-    margin-bottom: 34px;
+    margin-bottom: 28px;
   }
-  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom: 18px; }
   .btn-primary{
     display:inline-flex;
     align-items:center;
     gap:10px;
-    background: var(--gold);
-    color: #16211B;
+    background: var(--primary);
+    color: var(--on-primary);
     font-weight:600;
     padding: 14px 24px;
     border-radius: 10px;
@@ -149,7 +160,7 @@
     font-size:15.5px;
     transition: transform .15s, background .2s;
   }
-  .btn-primary:hover{ background: var(--gold-soft); transform: translateY(-1px); }
+  .btn-primary:hover{ background: var(--primary-soft); transform: translateY(-1px); }
   .btn-secondary{
     display:inline-flex;
     align-items:center;
@@ -161,7 +172,29 @@
     border:1px solid var(--line);
     transition: border-color .2s, color .2s;
   }
-  .btn-secondary:hover{ border-color: var(--sage); color: var(--ink); }
+  .btn-secondary:hover{ border-color: var(--accent); color: var(--ink); }
+
+  .badge-row{ display:flex; gap: 10px; flex-wrap:wrap; margin-bottom: 12px; }
+  .badge{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    border: 1px solid rgba(34,217,199,0.3);
+    background: rgba(34,217,199,0.06);
+    padding: 6px 12px;
+    border-radius: 100px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+
+  .sub-link{
+    font-size: 13.5px;
+    color: var(--ink-dim);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .sub-link:hover{ color: var(--ink); }
 
   /* PHONE MOCKUP */
   .phone-stage{ display:flex; justify-content:center; }
@@ -171,7 +204,7 @@
     border: 1px solid var(--line);
     border-radius: 34px;
     padding: 10px;
-    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.6);
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.7);
   }
   .phone-head{
     display:flex;
@@ -182,14 +215,14 @@
   .phone-avatar{
     width:34px; height:34px;
     border-radius:50%;
-    background: linear-gradient(140deg, var(--gold-soft), var(--sage));
+    background: linear-gradient(140deg, var(--primary-soft), var(--accent));
     display:flex; align-items:center; justify-content:center;
-    font-family:'Fraunces',serif; font-weight:600; font-size:14px; color:#16211B;
+    font-family:'Fraunces',serif; font-weight:600; font-size:14px; color:#0A0E1A;
   }
   .phone-head .name{ font-size:14px; font-weight:600; }
-  .phone-head .status{ font-size:11.5px; color: var(--sage); font-family:'IBM Plex Mono',monospace; }
+  .phone-head .status{ font-size:11.5px; color: var(--accent); font-family:'IBM Plex Mono',monospace; }
   .phone-body{
-    background: #0F1813;
+    background: #070A13;
     border-radius: 22px;
     padding: 16px 12px;
     min-height: 340px;
@@ -216,12 +249,12 @@
   }
   .bubble.out{
     align-self:flex-end;
-    background: var(--gold);
-    color: #16211B;
+    background: var(--primary);
+    color: var(--on-primary);
     border-bottom-right-radius: 4px;
     font-weight:500;
   }
-  .bubble.check::after{ content:" ✓✓"; font-size:11px; opacity:0.65; }
+  .bubble.check::after{ content:" ✓✓"; font-size:11px; opacity:0.75; }
   @keyframes rise{ to{ opacity:1; transform:none; } }
   .typing{
     align-self:flex-start;
@@ -244,15 +277,36 @@
   @keyframes bounce{ 0%,60%,100%{ transform: translateY(0); opacity:.4 } 30%{ transform: translateY(-3px); opacity:1 } }
 
   /* SECTION SHARED */
-  section{ padding: 78px 0; border-top: 1px solid var(--line); }
-  .section-head{ max-width: 620px; margin-bottom: 46px; }
+  section{ padding: 74px 0; border-top: 1px solid var(--line); }
+  .section-head{ max-width: 640px; margin-bottom: 42px; }
   .section-head h2{ font-size: clamp(26px, 3vw, 34px); margin-top:14px; }
   .section-head p{ color: var(--ink-dim); margin-top: 12px; font-size:15.5px; }
 
+  /* QUIENES SOMOS */
+  .about-text{ max-width: 760px; }
+  .about-text p{ color: var(--ink-dim); font-size: 16px; margin-top: 16px; }
+  .about-text p:first-of-type{ margin-top: 20px; }
+
+  /* SLOGAN BANNER */
+  .banner{
+    border-top: 1px solid var(--line);
+    padding: 60px 0;
+    text-align:center;
+  }
+  .banner blockquote{
+    font-family:'Fraunces',serif;
+    font-size: clamp(22px, 3vw, 30px);
+    line-height: 1.4;
+    max-width: 760px;
+    margin: 0 auto;
+    color: var(--ink);
+  }
+  .banner blockquote em{ font-style: normal; color: var(--accent); }
+
   /* SERVICES GRID */
-  .grid-4{
+  .services-grid{
     display:grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1px;
     background: var(--line);
     border: 1px solid var(--line);
@@ -266,71 +320,147 @@
   .card .mark{
     font-family:'IBM Plex Mono',monospace;
     font-size:12px;
-    color: var(--gold-soft);
+    color: var(--accent);
     margin-bottom:14px;
     display:block;
   }
-  .card h3{ font-size: 18px; margin-bottom: 8px; font-weight:600; }
+  .card h3{ font-size: 17.5px; margin-bottom: 8px; font-weight:600; }
   .card p{ color: var(--ink-dim); font-size: 14.5px; }
+
+  /* COMPARISON TABLE */
+  .table-scroll{ overflow-x:auto; border-radius: 16px; border: 1px solid var(--line); }
+  table.compare{
+    width:100%;
+    border-collapse: collapse;
+    min-width: 480px;
+    background: var(--surface);
+  }
+  table.compare th, table.compare td{
+    padding: 16px 22px;
+    text-align:left;
+    font-size: 15px;
+    border-bottom: 1px solid var(--line);
+  }
+  table.compare th{
+    font-family:'IBM Plex Mono',monospace;
+    font-size: 12.5px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    background: var(--surface-2);
+  }
+  table.compare th.col-ia, table.compare td.col-ia{
+    background: rgba(34,217,199,0.06);
+    color: var(--ink);
+  }
+  table.compare th.col-ia{ color: var(--accent); }
+  table.compare td.col-no{ color: var(--ink-dim); }
+  table.compare tr:last-child td{ border-bottom: none; }
+
+  /* BUSINESS PILLS */
+  .pill-row{ display:flex; flex-wrap:wrap; gap: 12px; }
+  .pill{
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-dim);
+    transition: border-color .2s, color .2s;
+  }
+  .pill:hover{ border-color: var(--primary-soft); color: var(--ink); }
 
   /* PROCESS */
   .steps{
     display:grid;
     grid-template-columns: repeat(3,1fr);
     gap: 28px;
-    counter-reset: step;
   }
   .step{ position:relative; padding-top: 8px; }
   .step .num{
     font-family:'Fraunces',serif;
     font-size: 40px;
-    color: var(--gold-soft);
-    opacity:0.55;
+    color: var(--primary-soft);
+    opacity:0.6;
     display:block;
     margin-bottom: 10px;
   }
   .step h3{ font-size:17px; margin-bottom:8px; font-weight:600; }
   .step p{ color: var(--ink-dim); font-size:14.5px; }
 
-  /* CASE */
-  .case{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+  /* TRUST */
+  .trust{
     background: var(--surface);
     border:1px solid var(--line);
     border-radius: 18px;
+    padding: 44px 40px;
+    text-align:center;
+  }
+  .trust h3{ font-size: 24px; margin-bottom: 12px; }
+  .trust p{ color: var(--ink-dim); font-size:15.5px; max-width: 620px; margin: 0 auto; }
+
+  /* FORM */
+  .form-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
     padding: 40px;
-    align-items:center;
+    max-width: 640px;
   }
-  .case .tag{
+  .form-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 26px;
+  }
+  .field{ display:flex; flex-direction:column; gap:7px; }
+  .field.full{ grid-column: 1 / -1; }
+  .field label{
+    font-size: 13px;
+    color: var(--ink-dim);
     font-family:'IBM Plex Mono',monospace;
-    font-size:12px;
-    color: var(--sage);
-    letter-spacing:.08em;
-    text-transform:uppercase;
   }
-  .case h3{ font-size: 24px; margin: 12px 0 12px; }
-  .case p{ color: var(--ink-dim); font-size:15px; margin-bottom: 18px; }
-  .case-stats{ display:flex; gap:28px; }
-  .case-stats div b{ font-family:'Fraunces',serif; font-size:26px; display:block; color: var(--gold-soft); }
-  .case-stats div span{ font-size:12.5px; color: var(--ink-dim); }
-  .quote{
-    font-family:'Fraunces',serif;
-    font-size: 20px;
-    line-height:1.5;
+  .field label .req{ color: var(--accent); }
+  .field input{
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 11px 14px;
     color: var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size: 14.5px;
   }
-  .quote::before{ content:"“"; color: var(--gold-soft); }
-  .quote::after{ content:"”"; color: var(--gold-soft); }
+  .field input:focus{ outline: 2px solid var(--primary-soft); outline-offset: 1px; }
+  .form-submit{
+    margin-top: 26px;
+    display:flex;
+    align-items:center;
+    gap: 16px;
+    flex-wrap:wrap;
+  }
+  .form-submit button{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size: 15.5px;
+    background: var(--primary);
+    color: var(--on-primary);
+    border:none;
+    padding: 14px 26px;
+    border-radius: 10px;
+    cursor:pointer;
+    transition: background .2s, transform .15s;
+  }
+  .form-submit button:hover{ background: var(--primary-soft); transform: translateY(-1px); }
+  .form-note{ font-size: 13px; color: var(--ink-dim); }
+  #formStatus{ font-size: 13.5px; margin-top: 14px; }
+  #formStatus.ok{ color: var(--accent); }
+  #formStatus.err{ color: var(--bad); }
 
   /* FOOTER CTA */
-  .cta-final{
-    text-align:center;
-    padding: 90px 0 100px;
-  }
+  .cta-final{ text-align:center; padding: 90px 0 100px; }
   .cta-final h2{ font-size: clamp(28px,4vw,42px); margin-bottom:16px; }
   .cta-final p{ color: var(--ink-dim); margin-bottom: 30px; }
+  .cta-final .cta-row{ justify-content:center; margin-bottom:0; }
 
   footer{
     border-top: 1px solid var(--line);
@@ -346,37 +476,47 @@
   @media (max-width: 860px){
     .hero{ grid-template-columns: 1fr; padding-top: 52px; }
     .phone-stage{ order:-1; }
-    .grid-4{ grid-template-columns: 1fr; }
+    .services-grid{ grid-template-columns: 1fr; }
     .steps{ grid-template-columns: 1fr; }
-    .case{ grid-template-columns: 1fr; padding: 28px; }
+    .form-grid{ grid-template-columns: 1fr; }
+    .form-card{ padding: 28px; }
     .wrap{ padding: 0 20px; }
+    .nav-right{ gap: 10px; }
   }
 
   @media (prefers-reduced-motion: reduce){
     .bubble, .typing{ animation: none !important; opacity:1 !important; transform:none !important; }
   }
 
-  :focus-visible{ outline: 2px solid var(--gold-soft); outline-offset: 2px; }
+  :focus-visible{ outline: 2px solid var(--primary-soft); outline-offset: 2px; }
 </style>
 </head>
 <body>
 
 <nav>
   <div class="wrap">
-    <div class="brand">chatbot<span>.ia</span></div>
-    <a class="nav-cta" href="https://wa.me/34600000000?text=Hola%2C%20quiero%20un%20chatbot%20para%20mi%20negocio" target="_blank" rel="noopener">Escríbeme por WhatsApp →</a>
+    <div class="brand">sauzex<span>.ia</span></div>
+    <div class="nav-right">
+      <a class="nav-link" href="#formulario">Prueba gratis</a>
+      <a class="nav-cta" href="https://wa.me/34600000000?text=Hola%2C%20quiero%20un%20asistente%20de%20IA%20para%20mi%20negocio" target="_blank" rel="noopener">Escríbeme por WhatsApp →</a>
+    </div>
   </div>
 </nav>
 
 <header class="hero wrap">
   <div>
-    <span class="eyebrow">Chatbots con IA para negocios locales</span>
+    <span class="eyebrow">Asistentes con IA para negocios locales</span>
     <h1>Que tu negocio<br>responda solo, <em>incluso<br>cuando duermes.</em></h1>
-    <p class="lead">Diseño e implanto chatbots con IA que atienden a tus clientes por WhatsApp, responden dudas y reservan citas directamente en tu calendario. Sin turnos extra, sin llamadas perdidas.</p>
-    <div class="cta-row">
-      <a class="btn-primary" href="https://wa.me/34600000000?text=Hola%2C%20quiero%20un%20chatbot%20para%20mi%20negocio" target="_blank" rel="noopener">Hablar por WhatsApp</a>
-      <a class="btn-secondary" href="#como-funciona">Ver cómo funciona</a>
+    <p class="lead">Diseño e implanto asistentes con IA que atienden a tus clientes por WhatsApp y por llamada, responden dudas y reservan citas directamente en tu calendario. Sin turnos extra, sin llamadas perdidas.</p>
+    <div class="badge-row">
+      <span class="badge">100% personalizable</span>
+      <span class="badge">1 semana de prueba gratis</span>
     </div>
+    <div class="cta-row">
+      <a class="btn-primary" href="#formulario">Empezar prueba gratuita</a>
+      <a class="btn-secondary" href="https://wa.me/34600000000?text=Hola%2C%20quiero%20un%20asistente%20de%20IA%20para%20mi%20negocio" target="_blank" rel="noopener">Hablar por WhatsApp</a>
+    </div>
+    <a class="sub-link" href="#como-funciona">Ver cómo funciona</a>
   </div>
 
   <div class="phone-stage">
@@ -393,14 +533,28 @@
   </div>
 </header>
 
+<section id="quienes-somos">
+  <div class="wrap">
+    <span class="eyebrow">Quiénes somos</span>
+    <div class="about-text">
+      <p>Impulsamos negocios con inteligencia artificial diseñada para ahorrar tiempo, mejorar la atención al cliente y aumentar las ventas. Desarrollamos asistentes virtuales inteligentes y sistemas de atención por llamada capaces de responder consultas, gestionar citas, captar clientes y atender a tus usuarios las 24 horas del día.</p>
+      <p>Nuestra prioridad es ofrecer soluciones fiables, fáciles de integrar y adaptadas a las necesidades de cada empresa. Automatizamos procesos sin perder el trato profesional que tus clientes esperan, para que puedas centrarte en hacer crecer tu negocio mientras la IA trabaja por ti.</p>
+    </div>
+  </div>
+</section>
+
+<div class="banner wrap">
+  <blockquote>Menos horas dedicadas a tareas repetitivas, menos llamadas sin atender y <em>más tiempo para hacer crecer tu negocio.</em></blockquote>
+</div>
+
 <section id="servicios">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Qué hace el bot</span>
-      <h2>Un chatbot que conoce tu negocio de verdad</h2>
+      <span class="eyebrow">Qué hace tu asistente</span>
+      <h2>Un asistente que conoce tu negocio de verdad</h2>
       <p>No es un contestador con respuestas genéricas. Se configura con tus horarios, tus servicios y tu forma de hablar.</p>
     </div>
-    <div class="grid-4">
+    <div class="services-grid">
       <div class="card">
         <span class="mark">24/7</span>
         <h3>Responde a cualquier hora</h3>
@@ -412,15 +566,67 @@
         <p>Consulta tu calendario y bloquea el hueco sin que tengas que tocar nada.</p>
       </div>
       <div class="card">
-        <span class="mark">A medida</span>
-        <h3>Habla como tu negocio</h3>
-        <p>Se entrena con tus servicios, precios y tono, no con plantillas genéricas.</p>
+        <span class="mark">A tu medida</span>
+        <h3>Personalización total</h3>
+        <p>100% adaptado a tu negocio: tono, servicios y flujos, sin plantillas cerradas.</p>
       </div>
       <div class="card">
-        <span class="mark">WhatsApp</span>
+        <span class="mark">Canales</span>
         <h3>Donde ya están tus clientes</h3>
-        <p>Funciona en WhatsApp, y también puede conectarse a Instagram o tu web.</p>
+        <p>Funciona por WhatsApp y llamada, y también puede conectarse a Instagram o tu web.</p>
       </div>
+      <div class="card">
+        <span class="mark">Prueba</span>
+        <h3>1 semana gratis</h3>
+        <p>Pruébalo en tu negocio sin compromiso antes de decidir.</p>
+      </div>
+      <div class="card">
+        <span class="mark">Fiable</span>
+        <h3>Trato siempre profesional</h3>
+        <p>Automatiza sin perder la cercanía que esperan tus clientes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="comparativa">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">La diferencia</span>
+      <h2>Lo que cambia al incorporar IA</h2>
+    </div>
+    <div class="table-scroll">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th class="col-no">Sin IA</th>
+            <th class="col-ia">Con IA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="col-no">Llamadas perdidas</td><td class="col-ia">Atención 24/7</td></tr>
+          <tr><td class="col-no">Respuestas lentas</td><td class="col-ia">Respuesta inmediata</td></tr>
+          <tr><td class="col-no">Empleados saturados</td><td class="col-ia">Procesos automatizados</td></tr>
+          <tr><td class="col-no">Menos ventas</td><td class="col-ia">Más oportunidades</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="negocios">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Para quién es</span>
+      <h2>Negocios que ya podrían tener su asistente de IA</h2>
+    </div>
+    <div class="pill-row">
+      <span class="pill">Clínicas dentales</span>
+      <span class="pill">Talleres</span>
+      <span class="pill">Gimnasios</span>
+      <span class="pill">Inmobiliarias</span>
+      <span class="pill">Barberías</span>
+      <span class="pill">Centros de estética</span>
     </div>
   </div>
 </section>
@@ -429,7 +635,7 @@
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Proceso</span>
-      <h2>De la idea al bot funcionando</h2>
+      <h2>De la idea al asistente funcionando</h2>
     </div>
     <div class="steps">
       <div class="step">
@@ -439,7 +645,7 @@
       </div>
       <div class="step">
         <span class="num">02</span>
-        <h3>Configuro el bot</h3>
+        <h3>Configuro tu asistente</h3>
         <p>Lo conecto a tu calendario y lo entreno con la información real de tu negocio.</p>
       </div>
       <div class="step">
@@ -451,21 +657,57 @@
   </div>
 </section>
 
-<section id="caso">
+<section id="confianza">
   <div class="wrap">
-    <div class="case">
-      <div>
-        <span class="tag">Caso real</span>
-        <h3>MARTO'S BARBER</h3>
-        <p class="quote">Antes contestaba yo entre corte y corte. Ahora el bot gestiona las citas y yo solo miro la agenda.</p>
-      </div>
-      <div>
-        <div class="case-stats">
-          <div><b>24/7</b><span>disponibilidad</span></div>
-          <div><b>0</b><span>llamadas perdidas</span></div>
-          <div><b>1</b><span>agenda siempre al día</span></div>
+    <div class="trust">
+      <span class="eyebrow" style="justify-content:center;">Ya en marcha</span>
+      <h3>Ya lo están usando negocios reales</h3>
+      <p>Nuestros asistentes de IA ya gestionan la atención al cliente de negocios reales en distintos sectores, respondiendo consultas y reservando citas cada día.</p>
+    </div>
+  </div>
+</section>
+
+<section id="formulario">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Empieza ahora</span>
+      <h2>Solicita tu prueba gratuita de 1 semana</h2>
+      <p>Rellena tus datos y me pongo en contacto contigo para configurar tu asistente.</p>
+    </div>
+    <div class="form-card">
+      <form id="leadForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="nombre">Nombre <span class="req">*</span></label>
+            <input id="nombre" name="nombre" type="text" required>
+          </div>
+          <div class="field">
+            <label for="apellidos">Apellidos</label>
+            <input id="apellidos" name="apellidos" type="text">
+          </div>
+          <div class="field">
+            <label for="pais">País <span class="req">*</span></label>
+            <input id="pais" name="pais" type="text" required>
+          </div>
+          <div class="field">
+            <label for="region">Región</label>
+            <input id="region" name="region" type="text">
+          </div>
+          <div class="field">
+            <label for="empresa">Nombre empresa / negocio</label>
+            <input id="empresa" name="empresa" type="text">
+          </div>
+          <div class="field">
+            <label for="email">Correo electrónico <span class="req">*</span></label>
+            <input id="email" name="email" type="email" required>
+          </div>
         </div>
-      </div>
+        <div class="form-submit">
+          <button type="submit">Enviar solicitud</button>
+          <span class="form-note">Te contactamos en menos de 24h.</span>
+        </div>
+        <div id="formStatus"></div>
+      </form>
     </div>
   </div>
 </section>
@@ -474,13 +716,16 @@
   <div class="wrap">
     <h2>¿Hablamos de tu negocio?</h2>
     <p>Cuéntame qué necesitas y te digo cómo montarlo.</p>
-    <a class="btn-primary" href="https://wa.me/34600000000?text=Hola%2C%20quiero%20un%20chatbot%20para%20mi%20negocio" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    <div class="cta-row">
+      <a class="btn-primary" href="#formulario">Empezar prueba gratuita</a>
+      <a class="btn-secondary" href="https://wa.me/34600000000?text=Hola%2C%20quiero%20un%20asistente%20de%20IA%20para%20mi%20negocio" target="_blank" rel="noopener">Hablar por WhatsApp</a>
+    </div>
   </div>
 </section>
 
 <footer class="wrap">
-  <span>chatbot.ia — Asturias</span>
-  <span>Chatbots con IA para negocios locales</span>
+  <span>sauzex.ia — Asturias</span>
+  <span>Asistentes de IA para negocios locales</span>
 </footer>
 
 <script>
@@ -514,6 +759,58 @@
         chat.scrollTop = chat.scrollHeight;
       }, delay);
       delay += 550;
+    }
+  });
+
+  // --- Formulario de prueba gratuita ---
+  // Sustituye esta URL por la de tu webhook de n8n cuando lo tengas listo.
+  const WEBHOOK_URL = "PON_AQUI_TU_URL_DE_WEBHOOK_N8N";
+
+  const leadForm = document.getElementById('leadForm');
+  const formStatus = document.getElementById('formStatus');
+
+  leadForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formStatus.className = '';
+    formStatus.textContent = '';
+
+    const data = {
+      nombre: document.getElementById('nombre').value.trim(),
+      apellidos: document.getElementById('apellidos').value.trim(),
+      pais: document.getElementById('pais').value.trim(),
+      region: document.getElementById('region').value.trim(),
+      empresa: document.getElementById('empresa').value.trim(),
+      email: document.getElementById('email').value.trim()
+    };
+
+    if(!data.nombre || !data.pais || !data.email){
+      formStatus.textContent = 'Completa los campos obligatorios (*).';
+      formStatus.className = 'err';
+      return;
+    }
+
+    if(WEBHOOK_URL.startsWith("PON_AQUI")){
+      formStatus.textContent = 'Formulario listo. Falta conectar la URL del webhook de n8n en el código.';
+      formStatus.className = 'err';
+      return;
+    }
+
+    try{
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if(res.ok){
+        formStatus.textContent = '¡Solicitud enviada! Te contactamos pronto.';
+        formStatus.className = 'ok';
+        leadForm.reset();
+      } else {
+        throw new Error('Respuesta no válida');
+      }
+    } catch(err){
+      formStatus.textContent = 'No se pudo enviar. Inténtalo de nuevo en unos minutos.';
+      formStatus.className = 'err';
     }
   });
 </script>
